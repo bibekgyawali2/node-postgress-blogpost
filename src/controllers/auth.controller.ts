@@ -17,14 +17,17 @@ class AuthController {
         req: Request,
         res: Response,
         next: NextFunction
-    ): Promise<Response> {
+    ): Promise<Response | void> {
+        try {
+            const user = await this.authService.signUp(req.body);
 
-        const user = await this.authService.signUp(req.body);
-
-        return res.status(StatusCodes.CREATED).json({
-            status: "success",
-            data: user,
-        });
+            return res.status(StatusCodes.CREATED).json({
+                status: "success",
+                data: user,
+            });
+        } catch (err) {
+            next(err);
+        }
     }
 
     async signIn(req: Request, res: Response, next: NextFunction) {
@@ -34,10 +37,10 @@ class AuthController {
         });
         res.status(StatusCodes.CREATED).json({
             success: true,
-            message: messages["userCreated"],
+            message: messages["validLogin"],
             data: {
                 user: { ...user, password: undefined },
-                token
+                token,
             },
         });
     }

@@ -30,6 +30,13 @@ class User extends CommonEntity {
     })
     password!: string;
 
+    @Column({
+        name: "role",
+        nullable: false,
+        default: "user"
+    })
+    role!: string;
+
     // Relations
     @OneToMany(() => Post, (post) => post.user)
     posts!: Post[];

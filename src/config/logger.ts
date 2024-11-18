@@ -26,27 +26,39 @@ const colors = {
 
 winston.addColors(colors);
 
-const format = winston.format.combine(
-    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+// Console format with colors
+const consoleFormat = winston.format.combine(
     winston.format.colorize({ all: true }),
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
     winston.format.printf(
         (info) => `${info.timestamp} ${info.level}: ${info.message}`
     )
 );
 
+// File and API response format (no colors)
+const apiFormat = winston.format.combine(
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+    winston.format.json()
+);
+
 const transports = [
-    new winston.transports.Console(),
+    new winston.transports.Console({
+        format: consoleFormat,
+    }),
     new winston.transports.File({
         filename: "log/error.log",
         level: "error",
+        format: consoleFormat, // Use plain format for file logs
     }),
-    new winston.transports.File({ filename: "log/all.log" }),
+    new winston.transports.File({
+        filename: "log/all.log",
+        format: consoleFormat, // Use plain format for file logs
+    }),
 ];
 
 const Logger = winston.createLogger({
     level: level(),
     levels,
-    format,
     transports,
 });
 

@@ -23,6 +23,9 @@ const messages = {
   invalidProjectId: "Invalid Project",
   actionCompleted: "Action completed successfully",
   contactNumberExist: "Contact Number Already Exist",
+  notFound: "Requested ........Not Found",
+  dataUpdateFailed: "Failed To Update Data"
+
 };
 
 export default messages;

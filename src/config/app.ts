@@ -1,12 +1,7 @@
 import express from "express";
-import cors from "cors";
-import routes from "../routes";
+import middlewares from "../middleware";
 const app = express();
 
-app.use(cors());
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/api", routes);
+middlewares(app);
 
 export default app;
