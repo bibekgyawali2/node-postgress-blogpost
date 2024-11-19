@@ -32,7 +32,7 @@ class AuthController {
 
     async signIn(req: Request, res: Response, next: NextFunction) {
         const user = await this.authService.signIn(req.body);
-        const token = JWTService.sign({}, Env.JWT_SECRET, {
+        const token = JWTService.sign({ userId: user.userId }, Env.JWT_SECRET, {
             expiresIn: Env.TOKEN_EXPIRES_IN,
         });
         res.status(StatusCodes.CREATED).json({

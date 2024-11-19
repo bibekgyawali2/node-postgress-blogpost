@@ -18,12 +18,8 @@ export class CreateBlogDTO {
     @IsOptional()
     tags?: string[];
 
-    @IsString()
-    @IsNotEmpty()
-    userId!: string;
 
     @IsString()
     @IsOptional()
     img?: string;
-
 }

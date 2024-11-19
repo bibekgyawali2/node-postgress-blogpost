@@ -9,19 +9,17 @@ import env from "../config/env";
 
 import { Environment } from "../constants/environment";
 
-
 import cors from "cors";
+import path from "path";
 
 const middlewares = (app: Application) => {
-
     app.use(cors());
 
     app.use(express.json());
 
-
     app.use(morganMiddleware);
 
-    app.use(express.static("public/uploads"));
+    app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
     app.use("/api", routes);
 
@@ -31,7 +29,6 @@ const middlewares = (app: Application) => {
     ) {
         // app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerui));
     }
-
 
     app.use(errorHandler);
 };
